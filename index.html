@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Form -->
+    <div id="login-container" class="container">
+        <h2>Restaurant Admin Login</h2>
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" value="admin@restaurant.com" required>
+            <input type="password" id="login-password" placeholder="Password" value="admin123" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="container" style="display: none;">
+        <header>
+            <h1>🍽️ Menu Management System</h1>
+            <div class="header-stats">
+                <span id="total-items">0 items</span>
+                <span id="recommended-count">0 recommended</span>
+            </div>
+            <button id="logout-btn">Logout</button>
+        </header>
+
+        <!-- Category Management Section -->
+<div class="category-management-section">
+    <h2>📂 Category Management</h2>
+    <div class="category-controls">
+        <div class="add-category-form">
+            <input type="text" id="new-category-name" placeholder="Enter new category (e.g., Tandoor Items)" maxlength="30">
+            <button onclick="adminPanel.addCustomCategory()" class="btn-add-category">
+                ➕ Add Category
+            </button>
+        </div>
+        
+        <div class="existing-categories" id="categories-list">
+            <h3>Current Categories:</h3>
+            <div class="categories-grid" id="categories-grid">
+                <!-- Categories will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Add/Edit Menu Item Form -->
+        <div class="form-section">
+            <h2 id="form-title">✨ Add New Menu Item</h2>
+            <form id="add-item-form">
+                <input type="hidden" id="edit-item-id" value="">
+                
+                <input type="text" id="item-name" placeholder="Item Name (e.g., Chicken Biryani)" required>
+                <textarea id="item-description" placeholder="Description" required></textarea>
+                <input type="number" id="item-price" placeholder="Price in ₹" required>
+                
+                <select id="item-category" required>
+                    <option value="">Select Category</option>
+                    <option value="starters">Starters</option>
+                    <option value="mains">Main Course</option>
+                    <option value="desserts">Desserts</option>
+                    <option value="beverages">Beverages</option>
+                </select>
+                
+                <!-- Recommendation Settings -->
+<div class="recommendation-section">
+    <h3>🌟 Marketing Features</h3>
+    <div class="checkbox-group">
+        <label class="checkbox-label">
+            <input type="checkbox" id="is-recommended">
+            <span class="custom-checkbox"></span>
+            <span class="checkbox-text"><strong>Chef's Special</strong> - Highlight as recommended item</span>
+        </label>
+        
+        <label class="checkbox-label">
+            <input type="checkbox" id="is-bestseller">
+            <span class="custom-checkbox"></span>
+            <span class="checkbox-text"><strong>Best Seller</strong> - Mark as customer favorite</span>
+        </label>
+        
+        <label class="checkbox-label">
+            <input type="checkbox" id="is-new">
+            <span class="custom-checkbox"></span>
+            <span class="checkbox-text"><strong>New Item</strong> - Highlight as recently added</span>
+        </label>
+        
+        <label class="checkbox-label">
+            <input type="checkbox" id="is-spicy">
+            <span class="custom-checkbox"></span>
+            <span class="checkbox-text">🌶️ <strong>Spicy</strong> - Add spice indicator</span>
+        </label>
+        
+        <label class="checkbox-label">
+            <input type="checkbox" id="is-vegetarian">
+            <span class="custom-checkbox"></span>
+            <span class="checkbox-text">🥬 <strong>Vegetarian</strong> - Mark as veg-friendly</span>
+        </label>
+    </div>
+    
+    <div class="priority-section">
+        <label for="display-priority">Display Priority (1-10):</label>
+        <input type="range" id="display-priority" min="1" max="10" value="5">
+        <span id="priority-value">5</span>
+        <small>Higher priority items appear first in the menu</small>
+    </div>
+</div>
+
+                
+                <!-- Image Upload Section -->
+                <div class="image-upload-section">
+                    <label for="item-image">📸 Item Image:</label>
+                    <input type="file" id="item-image" accept="image/*" onchange="adminPanel.previewImage(event)">
+                    <div id="image-preview" class="image-preview">
+                        <p>No image selected</p>
+                    </div>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" id="add-item-btn">
+                        <span id="btn-text">Add Item to Menu</span>
+                        <span id="loading-text" style="display: none;">Processing... ⏳</span>
+                    </button>
+                    <button type="button" id="cancel-edit-btn" onclick="adminPanel.cancelEdit()" style="display: none;">
+                        Cancel Edit
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h3>⚡ Quick Actions</h3>
+            <button onclick="adminPanel.toggleAllAvailability(true)" class="action-btn available">
+                Mark All Available
+            </button>
+            <button onclick="adminPanel.toggleAllAvailability(false)" class="action-btn unavailable">
+                Mark All Unavailable
+            </button>
+            <button onclick="adminPanel.clearAllRecommendations()" class="action-btn neutral">
+                Clear All Recommendations
+            </button>
+        </div>
+
+        <!-- Current Menu Items -->
+        <div id="menu-display">
+            <div class="menu-header">
+                <h2>Current Menu Items</h2>
+                <div class="view-toggles">
+                    <button class="view-btn active" onclick="adminPanel.setView('all')">All Items</button>
+                    <button class="view-btn" onclick="adminPanel.setView('recommended')">Recommended Only</button>
+                    <button class="view-btn" onclick="adminPanel.setView('unavailable')">Unavailable Only</button>
+                </div>
+            </div>
+            <div id="items-list">
+                <p>Loading menu items...</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
