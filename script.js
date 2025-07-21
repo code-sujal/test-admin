@@ -146,32 +146,37 @@ class AdminPanel {
         const cancelBtn = document.getElementById('modal-cancel');
 
         // Reset cancel button visibility
-        cancelBtn.style.display = 'inline-block';
+        cancelBtn.style.display = 'inline-flex';
 
         // Set icon based on type
         icon.className = `modal-icon ${type}`;
+        
+        // Update icon and button styling based on type
         switch (type) {
             case 'success':
-                iconSymbol.textContent = '✓';
+                iconSymbol.setAttribute('data-lucide', 'check-circle');
                 confirmBtn.className = 'modal-btn modal-btn-success';
                 break;
             case 'error':
-                iconSymbol.textContent = '✕';
+                iconSymbol.setAttribute('data-lucide', 'x-circle');
                 confirmBtn.className = 'modal-btn modal-btn-primary';
                 break;
             case 'info':
-                iconSymbol.textContent = 'i';
+                iconSymbol.setAttribute('data-lucide', 'info');
                 confirmBtn.className = 'modal-btn modal-btn-primary';
                 break;
             default:
-                iconSymbol.textContent = '!';
+                iconSymbol.setAttribute('data-lucide', 'alert-triangle');
                 confirmBtn.className = 'modal-btn modal-btn-primary';
         }
 
         titleEl.textContent = title;
         messageEl.textContent = message;
-        confirmBtn.textContent = confirmText;
-        cancelBtn.textContent = cancelText;
+        confirmBtn.innerHTML = `<i data-lucide="check"></i>${confirmText}`;
+        cancelBtn.innerHTML = `<i data-lucide="x"></i>${cancelText}`;
+
+        // Re-initialize icons for the modal
+        lucide.createIcons();
 
         // Set up event handlers
         confirmBtn.onclick = () => {
@@ -355,10 +360,10 @@ class AdminPanel {
                 <div class="category-actions">
                     ${!isDefault ? `
                         <button class="btn-edit-category" onclick="adminPanel.editCategory('${customCategory?.id}', '${categoryName}')">
-                            ✏️
+                            Edit
                         </button>
                         <button class="btn-delete-category" onclick="adminPanel.deleteCategory('${customCategory?.id}', '${categoryName}')">
-                            🗑️
+                            Delete
                         </button>
                     ` : `
                         <span style="font-size: 10px; color: var(--text-secondary);">Default</span>
