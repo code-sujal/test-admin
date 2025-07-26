@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="dashboard-navbar">
+        <div class="navbar-brand">
+            <i data-lucide="utensils-crossed" class="brand-icon"></i>
+            <span>Restaurant Admin</span>
+        </div>
+        
+        <div class="navbar-menu">
+            <a href="dashboard.html" class="nav-item active">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="menu-management.html" class="nav-item">
+                <i data-lucide="menu"></i>
+                <span>Menu</span>
+            </a>
+            <a href="order-management.html" class="nav-item">
+                <i data-lucide="shopping-cart"></i>
+                <span>Orders</span>
+            </a>
+            <a href="sales-analytics.html" class="nav-item">
+                <i data-lucide="trending-up"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="payments.html" class="nav-item">
+                <i data-lucide="credit-card"></i>
+                <span>Payments</span>
+            </a>
+        </div>
+
+        <div class="navbar-user">
+            <div class="user-info">
+                <span id="user-email">Loading...</span>
+                <small>Restaurant Admin</small>
+            </div>
+            <button class="logout-btn" id="logout-btn">
+                <i data-lucide="log-out"></i>
+                <span>Logout</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-main">
+        <!-- Welcome Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>Welcome to your Restaurant Dashboard</h1>
+                <p>Monitor your sales, manage orders, and grow your business</p>
+            </div>
+            <div class="header-date">
+                <i data-lucide="calendar"></i>
+                <span id="current-date"></span>
+            </div>
+        </header>
+
+        <!-- Key Metrics Cards -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i data-lucide="dollar-sign"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="today-revenue">₹0</h3>
+                    <p>Today's Revenue</p>
+                    <span class="metric-change positive">
+                        <i data-lucide="trending-up"></i>
+                        +12% from yesterday
+                    </span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i data-lucide="shopping-bag"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="today-orders">0</h3>
+                    <p>Orders Today</p>
+                    <span class="metric-change positive">
+                        <i data-lucide="trending-up"></i>
+                        +8% from yesterday
+                    </span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i data-lucide="users"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="active-customers">0</h3>
+                    <p>Active Customers</p>
+                    <span class="metric-change positive">
+                        <i data-lucide="trending-up"></i>
+                        +5% from yesterday
+                    </span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-icon">
+                    <i data-lucide="star"></i>
+                </div>
+                <div class="metric-content">
+                    <h3 id="avg-rating">4.8</h3>
+                    <p>Average Rating</p>
+                    <span class="metric-change positive">
+                        <i data-lucide="trending-up"></i>
+                        +0.2 from last week
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts and Analytics Section -->
+        <section class="analytics-section">
+            <div class="analytics-grid">
+                <!-- Sales Chart -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Sales Overview</h3>
+                        <div class="chart-controls">
+                            <button class="control-btn active" data-period="7">7D</button>
+                            <button class="control-btn" data-period="30">30D</button>
+                            <button class="control-btn" data-period="90">90D</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sales-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Popular Items -->
+                <div class="chart-card">
+                    <div class="card-header">
+                        <h3>Popular Menu Items</h3>
+                        <a href="menu-management.html" class="view-all-link">
+                            View All <i data-lucide="arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="popular-items-list" id="popular-items">
+                        <div class="item-placeholder">
+                            <i data-lucide="loader-2" class="spinning"></i>
+                            Loading popular items...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity and Quick Actions -->
+        <section class="bottom-section">
+            <div class="bottom-grid">
+                <!-- Recent Orders -->
+                <div class="activity-card">
+                    <div class="card-header">
+                        <h3>Recent Orders</h3>
+                        <a href="order-management.html" class="view-all-link">
+                            View All <i data-lucide="arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="recent-orders-list" id="recent-orders">
+                        <div class="order-placeholder">
+                            <i data-lucide="loader-2" class="spinning"></i>
+                            Loading recent orders...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-card">
+                    <div class="card-header">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="actions-grid">
+                        <a href="menu-management.html" class="action-btn">
+                            <i data-lucide="plus-circle"></i>
+                            <span>Add Menu Item</span>
+                        </a>
+                        <a href="order-management.html" class="action-btn">
+                            <i data-lucide="eye"></i>
+                            <span>View Orders</span>
+                        </a>
+                        <a href="sales-analytics.html" class="action-btn">
+                            <i data-lucide="bar-chart-3"></i>
+                            <span>Sales Report</span>
+                        </a>
+                        <a href="payments.html" class="action-btn">
+                            <i data-lucide="credit-card"></i>
+                            <span>Payment Status</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
+    <script type="module" src="dashboard.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
