@@ -717,3 +717,163 @@
     outline: 2px solid var(--accent-color);
     outline-offset: 2px;
 }
+/* ✅ NEW: Enhanced Header Stats for Today's Orders */
+.dashboard-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 40px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--backdrop-blur);
+    border-radius: var(--border-radius-lg);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-2xl);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+.header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.header-content h1 {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-content p {
+    font-size: 18px;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+.header-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-item {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: 16px;
+    backdrop-filter: var(--backdrop-blur);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 80px;
+    transition: var(--transition);
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ✅ Status-specific stat coloring */
+.stat-item:nth-child(2) .stat-number { /* Pending */
+    color: #fbbf24;
+}
+
+.stat-item:nth-child(3) .stat-number { /* Preparing */
+    color: #3b82f6;
+}
+
+.stat-item:nth-child(4) .stat-number { /* Ready */
+    color: #10b981;
+}
+
+.stat-item:nth-child(5) .stat-number { /* Completed */
+    color: #6b7280;
+}
+
+/* ✅ Session ID styling in order cards */
+.session-id {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 12px;
+    background: rgba(107, 114, 128, 0.1);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(107, 114, 128, 0.2);
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* ✅ Enhanced export button styling */
+.export-btn {
+    background: var(--gradient-success);
+}
+
+.export-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+/* ✅ Responsive adjustments */
+@media (max-width: 1024px) {
+    .dashboard-header {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 24px;
+    }
+    
+    .header-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-stats {
+        gap: 12px;
+    }
+    
+    .stat-item {
+        padding: 16px 12px;
+        min-width: 60px;
+    }
+    
+    .stat-number {
+        font-size: 24px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+    }
+}
